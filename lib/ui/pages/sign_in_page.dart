@@ -16,9 +16,9 @@ class _SignInPageState extends State<SignInPage> {
       title: 'Sign In',
       subtitle: "Find your best ever meal",
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            width: double.infinity,
             margin: EdgeInsets.fromLTRB(defaultMargin, 26, defaultMargin, 6),
             child: Text(
               "Email Address",
@@ -45,6 +45,7 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ),
           Container(
+            width: double.infinity,
             margin: EdgeInsets.fromLTRB(defaultMargin, 16, defaultMargin, 6),
             child: Text(
               "Password",
@@ -88,7 +89,7 @@ class _SignInPageState extends State<SignInPage> {
                       color: mainColor,
                       child: Text('Sign In',
                           style: GoogleFonts.poppins(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontWeight: FontWeight.w500,
                           )),
                     )),
@@ -103,7 +104,9 @@ class _SignInPageState extends State<SignInPage> {
                       color: mainColor,
                     )
                   : RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(SignUpPage());
+                      },
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
