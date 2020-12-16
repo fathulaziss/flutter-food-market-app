@@ -1,5 +1,7 @@
 part of 'models.dart';
 
+enum FoodType { new_food, popular, recommended }
+
 class Food extends Equatable {
   final int id;
   final String picturePath;
@@ -8,6 +10,7 @@ class Food extends Equatable {
   final String ingredients;
   final int price;
   final double rate;
+  final List<FoodType> types;
 
   Food(
       {this.id,
@@ -16,7 +19,8 @@ class Food extends Equatable {
       this.description,
       this.ingredients,
       this.price,
-      this.rate});
+      this.rate,
+      this.types = const []});
 
   @override
   List<Object> get props => [
@@ -36,11 +40,11 @@ List<Food> mockFoods = [
       picturePath:
           "https://i.pinimg.com/736x/06/7b/28/067b2879e5c9c42ec669bf639c3fbffc.jpg",
       name: "Sate Sayur Sultan",
-      description:
-          "Sate Sayur Sultan adalah menu sate vegan paling terkenal di Bandung. Sate ini dibuat dari berbagai macam bahan bermutu tinggi. Semua bahan ditanam dengan menggunakan teknologi masa kini sehingga memiliki nutrisi yang kaya.",
+      description: "Sate Sayur Sultan adalah menu sate vegan paling terkenal di Bandung. Sate ini dibuat dari berbagai macam bahan bermutu tinggi. Semua bahan ditanam dengan menggunakan teknologi masa kini sehingga memiliki nutrisi yang kaya.",
       ingredients: "Bawang Merah, Paprika, Bawang Bombay, Timun",
       price: 150000,
-      rate: 4.2),
+      rate: 4.2,
+      types: [FoodType.new_food, FoodType.recommended, FoodType.popular]),
   Food(
       id: 2,
       picturePath:
@@ -56,21 +60,21 @@ List<Food> mockFoods = [
       picturePath:
           "https://i1.wp.com/varminz.com/wp-content/uploads/2019/12/mexican-chopped-salad3.jpg?fit=843%2C843&ssl=1",
       name: "Mexican Chopped Salad",
-      description:
-          "Salad ala mexico yang kaya akan serat dan vitamin. Seluruh bahan diambil dari Mexico sehingga akan memiliki cita rasa yang original.",
+      description: "Salad ala mexico yang kaya akan serat dan vitamin. Seluruh bahan diambil dari Mexico sehingga akan memiliki cita rasa yang original.",
       ingredients: "Jagung, Selada, Tomat Ceri, Keju, Wortel",
       price: 105900,
-      rate: 3.9),
+      rate: 3.9,
+      types: [FoodType.new_food]),
   Food(
       id: 4,
       picturePath:
           "https://images.immediate.co.uk/production/volatile/sites/2/2016/08/25097.jpg?quality=90&resize=768,574",
       name: "Sup Wortel Pedas",
-      description:
-          "Sup wortel pedas yang unik ini cocok banget buat kalian-kalian yang suka pedas namun ingin tetap sehat. Rasanya yang unik akan memanjakan lidah Anda.",
+      description: "Sup wortel pedas yang unik ini cocok banget buat kalian-kalian yang suka pedas namun ingin tetap sehat. Rasanya yang unik akan memanjakan lidah Anda.",
       ingredients: "Wortel, Seledri, Kacang Tanah, Labu, Garam, Gula",
       price: 60000,
-      rate: 4.9),
+      rate: 4.9,
+      types: [FoodType.recommended]),
   Food(
       id: 5,
       picturePath:
