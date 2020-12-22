@@ -6,12 +6,15 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  User user;
+  File pictureFile;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
-
     return GeneralPage(
       title: 'Sign Up',
       subtitle: "Register and eat",
@@ -20,21 +23,38 @@ class _SignUpPageState extends State<SignUpPage> {
       },
       child: Column(
         children: [
-          Container(
-            width: 110,
-            height: 110,
-            margin: EdgeInsets.only(top: 26),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/photo_border.png'))),
+          GestureDetector(
+            onTap: () async {
+              PickedFile pickedFile =
+                  await ImagePicker().getImage(source: ImageSource.gallery);
+              if (pickedFile != null) {
+                pictureFile = File(pickedFile.path);
+                setState(() {});
+              }
+            },
             child: Container(
+              width: 110,
+              height: 110,
+              margin: EdgeInsets.only(top: 26),
+              padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: NetworkImage(
-                          'https://www.biography.com/.image/t_share/MTU0ODUwMjQ0NjIwNzI0MDAx/chris-hemsworth-poses-during-a-photo-call-for-thor-ragnarok-on-october-15-2017-in-sydney-australia-photo-by-mark-metcalfe_getty-images-for-disney-square.jpg'),
-                      fit: BoxFit.cover)),
+                      image: AssetImage('assets/photo_border.png'))),
+              child: (pictureFile != null)
+                  ? Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: FileImage(pictureFile),
+                              fit: BoxFit.cover)),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: AssetImage('assets/photo.png'),
+                              fit: BoxFit.cover)),
+                    ),
             ),
           ),
           Container(
@@ -47,12 +67,8 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(
-                horizontal:
-                    defaultMargin), //margin utk memberi batas container dg layar hp
-            padding: EdgeInsets.symmetric(
-                horizontal:
-                    10), // padding utk memberi batas text input dg batas container
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black)),
@@ -74,12 +90,8 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(
-                horizontal:
-                    defaultMargin), //margin utk memberi batas container dg layar hp
-            padding: EdgeInsets.symmetric(
-                horizontal:
-                    10), // padding utk memberi batas text input dg batas container
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black)),
@@ -101,16 +113,13 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(
-                horizontal:
-                    defaultMargin), //margin utk memberi batas container dg layar hp
-            padding: EdgeInsets.symmetric(
-                horizontal:
-                    10), // padding utk memberi batas text input dg batas container
+            margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black)),
             child: TextField(
+              obscureText: true,
               controller: passwordController,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -119,24 +128,31 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 24),
-              height: 45,
-              padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-              child: RaisedButton(
-                onPressed: () {
-                  Get.to(AddressPage());
-                },
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                color: mainColor,
-                child: Text('Continue',
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    )),
-              )),
+            width: double.infinity,
+            margin: EdgeInsets.only(top: 24),
+            height: 45,
+            padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+            child: RaisedButton(
+              onPressed: () {
+                Get.to(AddressPage(
+                    User(
+                      name: nameController.text,
+                      email: emailController.text,
+                    ),
+                    passwordController.text,
+                    pictureFile));
+              },
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              color: mainColor,
+              child: Text(
+                'Continue',
+                style: GoogleFonts.poppins(
+                    color: Colors.black, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
         ],
       ),
     );
