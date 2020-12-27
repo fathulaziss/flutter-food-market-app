@@ -178,7 +178,7 @@ class _AddressPageState extends State<AddressPage> {
                               color: Colors.white,
                             ),
                             titleText: Text(
-                              "Sign In Failed",
+                              "Sign Up Failed",
                               style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600),
