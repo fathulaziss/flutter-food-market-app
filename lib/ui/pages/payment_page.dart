@@ -347,15 +347,16 @@ class _PaymentPageState extends State<PaymentPage> {
                         isLoading = true;
                       });
 
-                      bool result = await context
-                          .read<TransactionCubit>()
-                          .submitTransaction(widget.transaction.copyWith(
-                              dateTime: DateTime.now(),
-                              total: (widget.transaction.total * 1.1).toInt() +
-                                  50000));
+                      String paymentURL =
+                          await BlocProvider.of<TransactionCubit>(context)
+                              .submitTransaction(widget.transaction.copyWith(
+                                  dateTime: DateTime.now(),
+                                  total:
+                                      (widget.transaction.total * 1.1).toInt() +
+                                          50000));
 
-                      if (result == true) {
-                        Get.to(SuccessOrderPage());
+                      if (paymentURL != null) {
+                        Get.to(PaymentMethodPage(paymentURL));
                       } else {
                         setState(() {
                           isLoading = false;

@@ -56,6 +56,7 @@ class _SignInPageState extends State<SignInPage> {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black)),
             child: TextField(
+              obscureText: true,
               controller: passwordController,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -76,13 +77,13 @@ class _SignInPageState extends State<SignInPage> {
                         isLoading = true;
                       });
 
-                      await context.bloc<UserCubit>().signIn(
+                      await context.read<UserCubit>().signIn(
                           emailController.text, passwordController.text);
-                      UserState state = context.bloc<UserCubit>().state;
+                      UserState state = context.read<UserCubit>().state;
 
                       if (state is UserLoaded) {
-                        context.bloc<FoodCubit>().getFoods();
-                        context.bloc<TransactionCubit>().getTransactions();
+                        context.read<FoodCubit>().getFoods();
+                        context.read<TransactionCubit>().getTransactions();
                         Get.to(MainPage());
                       } else {
                         Get.snackbar("", "",
